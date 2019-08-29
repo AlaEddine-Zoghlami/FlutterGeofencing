@@ -150,7 +150,8 @@ class GeofencingService : MethodCallHandler, JobIntentService() {
                 }
                 catch(e : Exception)
                 {
-
+		e.printStackTrace()
+ 		mBackgroundChannel.invokeMethod("", geofenceUpdateList)
                 }
             }
         }
