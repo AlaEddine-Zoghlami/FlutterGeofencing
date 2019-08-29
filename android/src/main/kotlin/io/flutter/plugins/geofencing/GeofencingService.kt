@@ -144,7 +144,14 @@ class GeofencingService : MethodCallHandler, JobIntentService() {
                 queue.add(geofenceUpdateList)
             } else {
                 // Callback method name is intentionally left blank.
+                try
+                {
                 mBackgroundChannel.invokeMethod("", geofenceUpdateList)
+                }
+                catch(e : Exception)
+                {
+
+                }
             }
         }
     }
