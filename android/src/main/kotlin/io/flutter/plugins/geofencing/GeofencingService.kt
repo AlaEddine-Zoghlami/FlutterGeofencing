@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 package io.flutter.plugins.geofencing
-
+import android.os.Handler;
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.JobIntentService
@@ -27,7 +27,7 @@ class GeofencingService : MethodCallHandler, JobIntentService() {
     private val queue = ArrayDeque<List<Any>>()
     private lateinit var mBackgroundChannel: MethodChannel
     private lateinit var mContext: Context
-
+    final  var mHandler = new Handler() :Handler
     companion object {
         @JvmStatic
         private val TAG = "GeofencingService"
@@ -146,18 +146,12 @@ class GeofencingService : MethodCallHandler, JobIntentService() {
                 // Callback method name is intentionally left blank.
                 try
                 {
-		
-                mBackgroundChannel.invokeMethod("", geofenceUpdateList)
-                    mBackgroundChannel = MethodChannel(sBackgroundFlutterView,
-                            "plugins.flutter.io/geofencing_plugin_background")
-                    mBackgroundChannel.setMethodCallHandler(this)
-                }
+                    mHandler?.post { mBackgroundChannel.invokeMethod("", geofenceUpdateList) }
+
+
                 catch(e : Exception)
                 {
-                    mBackgroundChannel = MethodChannel(sBackgroundFlutterView,
-                            "plugins.flutter.io/geofencing_plugin_background")
-                    mBackgroundChannel.setMethodCallHandler(this)
-		e.printStackTrace()
+
  		
                 }
             }
