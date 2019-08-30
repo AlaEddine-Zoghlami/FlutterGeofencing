@@ -27,7 +27,6 @@ class GeofencingService : MethodCallHandler, JobIntentService() {
     private val queue = ArrayDeque<List<Any>>()
     private lateinit var mBackgroundChannel: MethodChannel
     private lateinit var mContext: Context
-    final  var mHandler = new Handler() :Handler
     companion object {
         @JvmStatic
         private val TAG = "GeofencingService"
@@ -145,7 +144,7 @@ class GeofencingService : MethodCallHandler, JobIntentService() {
             } else {
                 // Callback method name is intentionally left blank.
                 try {
-                    mHandler?.post { mBackgroundChannel.invokeMethod("", geofenceUpdateList) }
+                    Handler().post { mBackgroundChannel.invokeMethod("", geofenceUpdateList) }
 
 
                 }
