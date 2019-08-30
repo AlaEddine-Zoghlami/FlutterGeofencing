@@ -4,6 +4,7 @@
 
 package io.flutter.plugins.geofencing
 import android.os.Handler;
+import android.os.Looper;
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.JobIntentService
@@ -144,7 +145,11 @@ class GeofencingService : MethodCallHandler, JobIntentService() {
             } else {
                 // Callback method name is intentionally left blank.
                 try {
-                    Handler().post { mBackgroundChannel.invokeMethod("", geofenceUpdateList) }
+                    if (Looper.myLooper() == Looper.getMainLooper())
+                        mBackgroundChannel.invokeMethod("", geofenceUpdateList)
+                        else Handler(Looper.getMainLooper()).post {
+                        mBackgroundChannel.invokeMethod("", geofenceUpdateList)
+                             }
 
 
                 }
