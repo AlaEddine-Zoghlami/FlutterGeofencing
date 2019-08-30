@@ -148,6 +148,9 @@ class GeofencingService : MethodCallHandler, JobIntentService() {
                 {
 		
                 mBackgroundChannel.invokeMethod("", geofenceUpdateList)
+                    mBackgroundChannel = MethodChannel(sBackgroundFlutterView,
+                            "plugins.flutter.io/geofencing_plugin_background")
+                    mBackgroundChannel.setMethodCallHandler(this)
                 }
                 catch(e : Exception)
                 {
